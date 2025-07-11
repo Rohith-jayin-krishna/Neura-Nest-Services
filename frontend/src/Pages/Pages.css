@@ -1,0 +1,456 @@
+/* Pages.css */
+
+/* =====================================
+   🌟 Global Layout and Typography
+===================================== */
+.page-container {
+  padding: 5% 10%;
+  color: #f4f4f4;
+  background-color: #121212;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1, h2, h3 {
+  color: #F09304;
+  margin-bottom: 10px;
+}
+
+p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+button, a {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+
+/* =====================================
+   🌟 Hero Section (Two-Column Layout)
+===================================== */
+.hero-section.two-column {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 60px;
+  flex-wrap: wrap; /* for responsiveness */
+}
+
+.hero-section.two-column .text-content {
+  flex: 1 1 400px;
+  min-width: 280px;
+}
+
+.hero-section.two-column .image-container {
+  flex: 0 0 400px;
+  max-height: 600px;
+  overflow: hidden;
+}
+
+.smart-home-image {
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(240, 147, 4, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.smart-home-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 30px rgba(240, 147, 4, 0.6);
+}
+
+/* Hero Text Styles */
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.hero-description {
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 20px 0;
+}
+
+/* =====================================
+   💡 Features Section
+===================================== */
+.features-section {
+  margin: 60px 0;
+}
+
+.features-section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.feature-card {
+  background-color: #1f1f1f;
+  padding: 25px 20px;
+  border-radius: 10px;
+  border-left: 5px solid #F09304;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 0 transparent;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(240, 147, 4, 0.5);
+}
+
+/* =====================================
+   🔘 Explore Our Services Button Container
+===================================== */
+.explore-services-cta {
+  margin: 60px 0 100px;
+  text-align: center;
+}
+
+/* =====================================
+   🔘 Buttons (Primary)
+===================================== */
+.btn-primary {
+  background-color: #F09304;
+  color: #121212;
+  padding: 14px 36px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(240, 147, 4, 0.6);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #cc7702;
+  box-shadow: 0 6px 20px rgba(204, 119, 2, 0.9);
+  outline: none;
+}
+
+/* =====================================
+   🌟 Hover Backlight Illumination Effect
+===================================== */
+/* Applies to links, buttons, feature cards, nav links */
+a:hover, a:focus,
+button:hover, button:focus,
+.feature-card:hover,
+.nav-link:hover, .nav-link:focus {
+  position: relative;
+  z-index: 1;
+  box-shadow:
+    0 0 8px 3px rgba(240, 147, 4, 0.8),
+    0 0 20px 6px rgba(240, 147, 4, 0.6);
+  transition: box-shadow 0.3s ease;
+}
+
+/* =====================================
+   📦 Services / Packages Section
+===================================== */
+.packages-container {
+  display: flex;
+  justify-content: center; /* center cards horizontally */
+  gap: 30px;
+  flex-wrap: wrap; /* wrap on smaller screens */
+}
+
+.package-card {
+  background-color: #1f1f1f;
+  padding: 25px 20px;
+  border-radius: 10px;
+  border-left: 5px solid #F09304;
+  box-shadow: 0 0 0 transparent;
+  flex: 1 1 280px; /* grow/shrink with basis */
+  max-width: 350px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.package-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(240, 147, 4, 0.5);
+}
+
+/* =====================================
+   📱 Responsive Design
+===================================== */
+@media (max-width: 768px) {
+  /* Stack hero section vertically with smaller gaps */
+  .hero-section.two-column {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Hero image and text fill full width and remove max height */
+  .hero-section.two-column .image-container,
+  .hero-section.two-column .text-content {
+    flex: 1 1 100%;
+    max-height: none;
+  }
+
+  /* Button full width */
+  .btn-primary {
+    width: 100%;
+  }
+
+  /* Features grid becomes single column */
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hero description max width full */
+  .hero-description {
+    max-width: 100%;
+  }
+
+  /* Packages container stack vertically and center align */
+  .packages-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* Package cards full width on small devices */
+  .package-card {
+    width: 100%;
+    max-width: 350px;
+  }
+}
+/* ================================
+   Contact Page Styles
+   Scoped with .contact-page class
+================================= */
+
+.contact-page {
+  max-width: 800px;
+  margin: 40px auto 80px;
+  padding: 30px 40px;
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(240, 147, 4, 0.3);
+  color: #f4f4f4;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Headings */
+.contact-page h1 {
+  color: #F09304;
+  font-weight: 800;
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.contact-page p {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Form Elements */
+.contact-page label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #F09304;
+  font-size: 1rem;
+}
+
+.contact-page input[type="text"],
+.contact-page input[type="email"],
+.contact-page textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background-color: #121212;
+  color: #f4f4f4;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  resize: vertical;
+}
+
+.contact-page input[type="text"]:focus,
+.contact-page input[type="email"]:focus,
+.contact-page textarea:focus {
+  border-color: #F09304;
+  outline: none;
+  box-shadow: 0 0 12px rgba(240, 147, 4, 0.5);
+}
+
+/* Submit Button */
+.contact-page button.btn-primary {
+  width: 100%;
+  padding: 16px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 10px;
+  background-color: #F09304;
+  color: #121212;
+  border: none;
+  box-shadow: 0 6px 20px rgba(240, 147, 4, 0.6);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.contact-page button.btn-primary:hover,
+.contact-page button.btn-primary:focus {
+  background-color: #cc7702;
+  box-shadow: 0 8px 30px rgba(204, 119, 2, 0.9);
+  outline: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .contact-page {
+    padding: 30px 15px;
+    margin: 20px 10px 60px;
+  }
+
+  .contact-page h1 {
+    font-size: 2.2rem;
+  }
+}/* About.css */
+
+/* Base page styling - consistent with your main theme */
+.page-container.about-page {
+  padding: 5% 10%;
+  background-color: #121212;
+  color: #f4f4f4;
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-container.about-page h1 {
+  color: #F09304;
+  font-weight: 700;
+  font-size: 2.8rem;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.page-container.about-page p {
+  line-height: 1.7;
+  font-size: 1.15rem;
+  margin-bottom: 20px;
+  color: #e0e0e0;
+}
+
+.page-container.about-page strong {
+  color: #F09304;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .page-container.about-page {
+    padding: 8% 5%;
+  }
+  
+  .page-container.about-page h1 {
+    font-size: 2rem;
+  }
+  
+  .page-container.about-page p {
+    font-size: 1rem;
+  }
+}
+/* Fade-in */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slider container */
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* Image styling */
+.slide-img {
+  width: 100%;
+  max-width: 700px;
+  flex-shrink: 0;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Nav Buttons */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  font-size: 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+.nav-btn:hover {
+  background: white;
+}
+.nav-btn.left {
+  left: 10px;
+}
+.nav-btn.right {
+  right: 10px;
+}
+/* ================================
+   🕒 Service History Button
+================================= */
+.history-button {
+  background-color: #F09304;
+  color: #121212;
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(240, 147, 4, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.history-button:hover,
+.history-button:focus {
+  background-color: #cc7702;
+  box-shadow: 0 8px 20px rgba(204, 119, 2, 0.8);
+  outline: none;
+}

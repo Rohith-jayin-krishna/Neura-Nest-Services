@@ -1,0 +1,104 @@
+/* Full-page dark background */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #000; /* Entire page is black */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Centered login container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Login box styling */
+.login-box {
+  width: 100%;
+  max-width: 500px; /* Increased from 400px to 500px */
+  background-color: #121212;
+  padding: 2.5rem; /* Increased padding */
+  border-radius: 14px; /* Slightly more rounded */
+  box-shadow: 0 0 20px rgba(240, 147, 4, 0.4);
+  color: #ffc107;
+}
+/* Headings */
+.login-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #c1c1c1;
+}
+
+/* Form label and inputs */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #F09304;
+  border-radius: 8px;
+  background-color: #1e1e1e;
+  color: #ffc107;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #ffb347;
+  background-color: #292929;
+}
+
+/* Login button */
+.login-button {
+  width: 100%;
+  padding: 12px 0;
+  background-color: #F09304;
+  border: none;
+  border-radius: 10px;
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #d67c00;
+}
+
+/* Footer link */
+.login-footer {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.signup-link {
+  color: #F09304;
+  text-decoration: none;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}

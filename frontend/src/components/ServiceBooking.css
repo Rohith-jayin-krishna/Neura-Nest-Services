@@ -1,0 +1,96 @@
+/* src/components/ServiceBooking.css */
+
+.book-service-form {
+  width: 100%;
+  max-width: 360px; /* ORIGINAL max-width was 600px. 600 * 0.60 = 360px */
+  margin: 40px auto 80px; /* Centered with top/bottom margin */
+  padding: 30px 40px; /* More padding, consistent with other sections */
+  background-color: #1f1f1f; /* Dark background, consistent with package cards */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 8px 25px rgba(240, 147, 4, 0.3); /* Subtle orange shadow */
+  color: #f4f4f4; /* Light text color */
+  font-family: 'Segoe UI', sans-serif; /* Consistent font */
+}
+
+.book-service-form h2 {
+  color: #F09304; /* Orange heading color */
+  font-weight: 800; /* Bolder font weight */
+  font-size: 2.2rem; /* Larger font size for prominence */
+  margin-bottom: 25px; /* More space below heading */
+  text-align: center; /* Center the heading */
+}
+
+.book-service-form input,
+.book-service-form textarea {
+  display: block;
+  width: 100%;
+  padding: 14px 16px; /* Increased padding for better touch targets and appearance */
+  margin-bottom: 20px; /* More space between inputs */
+  border: 2px solid #333; /* Darker, more substantial border */
+  border-radius: 8px; /* Slightly more rounded input corners */
+  background-color: #121212; /* Even darker background for inputs */
+  color: #f4f4f4; /* Light text color */
+  font-size: 1rem; /* Standard font size */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for focus states */
+  resize: vertical; /* Allow vertical resizing for textarea */
+  /* --- FIX FOR ALIGNMENT --- */
+  box-sizing: border-box; /* This is crucial: padding and border are included in the element's total width and height */
+  -webkit-appearance: none; /* Helps normalize appearance across browsers for inputs/textareas */
+  -moz-appearance: none;
+  appearance: none;
+  vertical-align: top; /* Ensures consistency in vertical alignment */
+}
+
+.book-service-form input:focus,
+.book-service-form textarea:focus {
+  border-color: #F09304; /* Orange border on focus */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 12px rgba(240, 147, 4, 0.5); /* Glowing orange shadow on focus */
+}
+
+.book-service-form button[type="submit"] {
+  width: 100%;
+  padding: 16px 0; /* Larger padding for a more prominent button */
+  font-size: 1.2rem; /* Larger font size */
+  font-weight: 700; /* Bolder text */
+  border-radius: 10px; /* More rounded button corners */
+  background-color: #F09304; /* Orange background */
+  color: #121212; /* Dark text for contrast */
+  border: none; /* No border */
+  box-shadow: 0 6px 20px rgba(240, 147, 4, 0.6); /* Orange shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  cursor: pointer;
+  user-select: none;
+  /* --- FIX FOR ALIGNMENT (consistency) --- */
+  box-sizing: border-box;
+}
+
+.book-service-form button[type="submit"]:hover,
+.book-service-form button[type="submit"]:focus {
+  background-color: #cc7702; /* Darker orange on hover/focus */
+  box-shadow: 0 8px 30px rgba(204, 119, 2, 0.9); /* More intense shadow on hover/focus */
+  outline: none;
+}
+
+.book-service-form .success-message {
+  text-align: center;
+  color: #5cb85c; /* A pleasant green for success messages */
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 20px;
+  background-color: rgba(92, 184, 92, 0.1); /* Light green background */
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .book-service-form {
+    padding: 30px 15px; /* Less padding on smaller screens */
+    margin: 20px 10px 60px; /* Adjusted margins */
+  }
+
+  .book-service-form h2 {
+    font-size: 1.8rem; /* Smaller heading on small screens */
+  }
+}

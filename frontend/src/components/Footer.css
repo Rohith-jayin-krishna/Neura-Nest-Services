@@ -1,0 +1,33 @@
+/* src/components/Footer.css */
+.footer {
+    background-color: #1a1a1a;
+    color: #f4f4f4;
+    text-align: center;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .footer h3 {
+    margin-bottom: 15px;
+    color: #F09304;
+  }
+  
+  .footer-contact p {
+    margin: 8px 0;
+  }
+  
+  .footer a {
+    color: #f5b942;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .footer a:hover {
+    color: #F09304;
+  }
+  
+  .footer-bottom {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #aaa;
+  }
