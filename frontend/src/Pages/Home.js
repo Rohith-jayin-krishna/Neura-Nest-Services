@@ -1,5 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+// src/Pages/Home.jsx
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './Pages.css';
 
@@ -8,7 +9,30 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
 };
 
+// Fading animation for images
+const imageFade = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 1.2 } },
+  exit: { opacity: 0, transition: { duration: 1.2 } },
+};
+
+const images = [
+  require('../assets/smarthomeimage1.png'),
+  require('../assets/smarthomeimage3.png'),
+  require('../assets/smarthomeimage4.png'),
+];
+
 const Home = () => {
+  const [index, setIndex] = useState(0);
+
+  // Auto-switch every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="page-container home-container">
       {/* Hero Section */}
@@ -27,29 +51,30 @@ const Home = () => {
         </p>
         <p className="hero-description">
           Transform your living space with state-of-the-art smart home integrations, combined with
-          exquisite interior design. Affordable, intuitive, and tailor-made for your lifestyle.
+          exquisite interior design.
         </p>
-        
-        {/* Updated Button with Link */}
         <Link to="/services" className="btn-primary">Explore Our Services</Link>
       </motion.div>
 
-      {/* Image Section */}
+      {/* Image Carousel */}
       <section className="image-section">
         <div className="image-container">
-          <motion.img
-            src={require('../assets/smarthomeimage.png')}
-            alt="Smart Home Interior"
-            className="smart-home-image"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          />
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={index}
+              src={images[index]}
+              alt="Smart Home"
+              className="smart-home-image fade-carousel"
+              variants={imageFade}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            />
+          </AnimatePresence>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features Section (unchanged) */}
       <motion.section
         className="features-section"
         initial="hidden"
@@ -59,26 +84,14 @@ const Home = () => {
       >
         <h2>Why Choose NeuraNest?</h2>
         <div className="features-grid">
-          <div className="feature-card">
-            <h3>Smart Integration</h3>
-            <p>Seamlessly connect lighting, security, climate, and entertainment systems.</p>
-          </div>
-          <div className="feature-card">
-            <h3>Elegant Interiors</h3>
-            <p>Modern designs that enhance comfort and style in every room.</p>
-          </div>
-          <div className="feature-card">
-            <h3>Affordable Solutions</h3>
-            <p>High-quality smart home systems tailored to fit your budget.</p>
-          </div>
-          <div className="feature-card">
-            <h3>24/7 Support</h3>
-            <p>Reliable customer service ensuring your home runs smoothly at all times.</p>
-          </div>
+          <div className="feature-card"><h3>Smart Integration</h3><p>Seamlessly connect lighting, security, and more.</p></div>
+          <div className="feature-card"><h3>Elegant Interiors</h3><p>Modern designs that elevate your space.</p></div>
+          <div className="feature-card"><h3>Affordable Solutions</h3><p>Smart tech for every budget.</p></div>
+          <div className="feature-card"><h3>24/7 Support</h3><p>Always here when you need us.</p></div>
         </div>
       </motion.section>
 
-      {/* Testimonial Section */}
+      {/* Testimonial */}
       <motion.section
         className="testimonial-section"
         initial="hidden"
@@ -88,8 +101,7 @@ const Home = () => {
       >
         <h2>What Our Clients Say</h2>
         <blockquote>
-          “NeuraNest transformed my home into a smart, stylish haven — the perfect blend of
-          technology and design!” <br />
+          “NeuraNest transformed my home into a smart, stylish haven.”<br />
           <strong>- Sarah M.</strong>
         </blockquote>
       </motion.section>
