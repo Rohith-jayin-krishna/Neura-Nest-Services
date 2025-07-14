@@ -1,14 +1,12 @@
-// src/components/ServiceBooking.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ServiceBooking.css';
 import axios from 'axios';
 
-const ServiceBooking = () => {
+const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    service_type: '',
+    service_type: selectedService,
     preferred_date: '',
     message: '',
   });
@@ -17,8 +15,23 @@ const ServiceBooking = () => {
   const [ticketId, setTicketId] = useState('');
   const [error, setError] = useState('');
 
+  // Sync dropdown from selected tile
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      service_type: selectedService,
+    }));
+  }, [selectedService]);
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Sync back to tile highlight if user manually picks from dropdown
+    if (name === 'service_type' && setSelectedService) {
+      setSelectedService(value);
+    }
+
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -27,7 +40,6 @@ const ServiceBooking = () => {
     setTicketId('');
 
     const token = localStorage.getItem('access_token');
-
     if (!token) {
       setError('⚠️ You must be logged in to book a service.');
       return;
@@ -46,7 +58,7 @@ const ServiceBooking = () => {
       );
 
       setSubmitted(true);
-      setTicketId(response.data.ticket_id); // <-- Get ticket ID from response
+      setTicketId(response.data.ticket_id);
       console.log('✅ Booking submitted successfully:', response.data);
     } catch (error) {
       console.error('❌ Booking submission failed:', error);
@@ -91,13 +103,19 @@ const ServiceBooking = () => {
             value={formData.phone}
             required
           />
-          <input
+
+          <select
             name="service_type"
-            placeholder="Type of Service"
-            onChange={handleChange}
             value={formData.service_type}
+            onChange={handleChange}
             required
-          />
+          >
+            <option value="" disabled>Select Service Type</option>
+            <option value="Basic Package">Basic Package</option>
+            <option value="Plus Package">Plus Package</option>
+            <option value="Full Automation">Full Automation</option>
+          </select>
+
           <input
             name="preferred_date"
             type="date"

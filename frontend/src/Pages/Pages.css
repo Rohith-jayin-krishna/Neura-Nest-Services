@@ -455,3 +455,16 @@ button:hover, button:focus,
   box-shadow: 0 8px 20px rgba(204, 119, 2, 0.8);
   outline: none;
 }
+.package-img {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* ⬅️ Maintains square shape */
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  background-color: #1a1a1a; /* Optional: for fallback/transition */
+}
+.selected-package {
+  border: 2px solid #F09304;
+  box-shadow: 0 0 12px rgba(240, 147, 4, 0.6);
+  transform: scale(1.02);
+}

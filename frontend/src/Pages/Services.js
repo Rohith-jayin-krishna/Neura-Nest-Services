@@ -1,8 +1,12 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // <-- for navigation
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './Pages.css';
 import ServiceBooking from '../components/ServiceBooking';
+
+import basicImg from '../assets/Basic_Package.png';
+import plusImg from '../assets/Plus_Package.png';
+import fullImg from '../assets/Full_Package.png';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -10,10 +14,16 @@ const fadeInUp = {
 };
 
 const Services = () => {
-  const navigate = useNavigate(); // <-- Hook to navigate on click
+  const navigate = useNavigate();
+  const [selectedService, setSelectedService] = useState('');
 
   const handleHistoryClick = () => {
-    navigate('/service-history'); // <-- Target route for history
+    navigate('/service-history');
+  };
+
+  const handlePackageClick = (packageName) => {
+    setSelectedService(packageName);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   };
 
   return (
@@ -36,15 +46,29 @@ const Services = () => {
         variants={fadeInUp}
       >
         <div className="packages-container">
-          <div className="package-card">
+          <div
+            className={`package-card ${selectedService === 'Basic Package' ? 'selected-package' : ''}`}
+            onClick={() => handlePackageClick('Basic Package')}
+          >
+            <img src={basicImg} alt="Basic Package" className="package-img" />
             <h3>Basic Package</h3>
             <p>Smart lighting, wall switches</p>
           </div>
-          <div className="package-card">
+
+          <div
+            className={`package-card ${selectedService === 'Plus Package' ? 'selected-package' : ''}`}
+            onClick={() => handlePackageClick('Plus Package')}
+          >
+            <img src={plusImg} alt="Plus Package" className="package-img" />
             <h3>Plus Package</h3>
             <p>Includes lighting, smart locks, cameras, voice assistant.</p>
           </div>
-          <div className="package-card">
+
+          <div
+            className={`package-card ${selectedService === 'Full Automation' ? 'selected-package' : ''}`}
+            onClick={() => handlePackageClick('Full Automation')}
+          >
+            <img src={fullImg} alt="Full Automation" className="package-img" />
             <h3>Full Automation</h3>
             <p>Lighting, security, AC, curtains, energy monitoring.</p>
           </div>
@@ -58,9 +82,12 @@ const Services = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeInUp}
       >
-        <ServiceBooking />
+        {/* 🔄 Pass both selectedService and setSelectedService */}
+        <ServiceBooking
+          selectedService={selectedService}
+          setSelectedService={setSelectedService}
+        />
 
-        {/* --- New History Button --- */}
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <button onClick={handleHistoryClick} className="history-button">
             View Your Service History
