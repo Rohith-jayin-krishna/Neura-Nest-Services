@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './ServiceBooking.css';
 import axios from 'axios';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/themes/material_blue.css';
+import { format, isValid } from 'date-fns';
 
 const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
   const [formData, setFormData] = useState({
@@ -14,8 +17,8 @@ const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
   const [submitted, setSubmitted] = useState(false);
   const [ticketId, setTicketId] = useState('');
   const [error, setError] = useState('');
+  const dateInputRef = useRef(null);
 
-  // Sync dropdown from selected tile
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -23,14 +26,30 @@ const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
     }));
   }, [selectedService]);
 
+  useEffect(() => {
+    // Initialize flatpickr on input ref
+    if (dateInputRef.current) {
+      flatpickr(dateInputRef.current, {
+        dateFormat: 'Y-m-d',
+        minDate: 'today',
+        onChange: (selectedDates) => {
+          const date = selectedDates[0];
+          if (date && isValid(date)) {
+            setFormData((prev) => ({
+              ...prev,
+              preferred_date: format(date, 'yyyy-MM-dd'),
+            }));
+          }
+        },
+      });
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Sync back to tile highlight if user manually picks from dropdown
     if (name === 'service_type' && setSelectedService) {
       setSelectedService(value);
     }
-
     setFormData({ ...formData, [name]: value });
   };
 
@@ -45,6 +64,12 @@ const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
       return;
     }
 
+    const parsed = new Date(formData.preferred_date);
+    if (!isValid(parsed) || parsed < new Date().setHours(0, 0, 0, 0)) {
+      setError('Please select a valid future date.');
+      return;
+    }
+
     try {
       const response = await axios.post(
         'http://localhost:8000/api/bookings/',
@@ -56,18 +81,16 @@ const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
           },
         }
       );
-
       setSubmitted(true);
       setTicketId(response.data.ticket_id);
-      console.log('✅ Booking submitted successfully:', response.data);
     } catch (error) {
       console.error('❌ Booking submission failed:', error);
       if (error.response) {
         if (error.response.status === 401 || error.response.status === 403) {
           setError('Authentication failed. Please log in again.');
-        } else if (error.response.data && error.response.data.message) {
-          const message = error.response.data.message;
-          setError(`Submission failed: ${Array.isArray(message) ? message.join(', ') : message}`);
+        } else if (error.response.data?.message) {
+          const msg = error.response.data.message;
+          setError(`Submission failed: ${Array.isArray(msg) ? msg.join(', ') : msg}`);
         } else {
           setError('Booking submission failed. Please try again.');
         }
@@ -116,13 +139,15 @@ const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
             <option value="Full Automation">Full Automation</option>
           </select>
 
+          {/* ✅ Native Flatpickr on plain input */}
           <input
-            name="preferred_date"
-            type="date"
-            onChange={handleChange}
-            value={formData.preferred_date}
+            ref={dateInputRef}
+            className="date-picker-input"
+            placeholder="Preferred Date (YYYY-MM-DD)"
             required
+            readOnly
           />
+
           <textarea
             name="message"
             placeholder="Additional Message (Optional)"

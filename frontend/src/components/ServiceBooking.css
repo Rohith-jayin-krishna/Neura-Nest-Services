@@ -119,3 +119,56 @@
     font-size: 1.1rem;
   }
 }
+/* Calendar base */
+.flatpickr-calendar {
+  background: #000;
+  color: #FFD700;
+  border: 1px solid #FFD700;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Month navigation bar */
+.flatpickr-months {
+  background-color: #FFD700;
+  color: #000;
+}
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  color: #000;
+}
+
+/* Weekdays (Mon, Tue...) */
+.flatpickr-weekday {
+  color: #FFD700;
+  font-weight: bold;
+}
+
+/* Day cells */
+.flatpickr-day {
+  background: #000;
+  color: #FFD700;
+  border: none;
+}
+
+/* Hover effect */
+.flatpickr-day:hover {
+  background: #FFD700;
+  color: #000;
+}
+
+/* Selected date */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.selected:hover {
+  background: #FFD700;
+  color: #000;
+}
+
+/* Today’s date */
+.flatpickr-day.today {
+  border: 1px solid #FFD700;
+  box-shadow: 0 0 3px #FFD700;
+}
