@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LogIn.css';
+import './SignUp.css';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -13,7 +13,7 @@ const SignUp = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('❌ Passwords do not match.');
       setSuccessMessage('');
       return;
     }
@@ -28,25 +28,30 @@ const SignUp = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: name,     // ✅ Match Django field
+          username: name,
           email: email,
           password: password,
         }),
       });
 
-      const data = await response.json(); // 🔍 Always parse JSON first
+      const data = await response.json();
 
       if (!response.ok) {
         console.log('Server Error:', data);
+
+        const emailConflict = data.message === 'Email already registered.';
+
         setError(
-          data.message ||
-          data.email?.[0] ||
-          data.username?.[0] ||
-          data.password?.[0] ||
-          'Signup failed'
+          emailConflict
+            ? '⚠️ This email is already registered. Please log in or use a different email.'
+            : data.message ||
+              data.email?.[0] ||
+              data.username?.[0] ||
+              data.password?.[0] ||
+              'Signup failed'
         );
       } else {
-        setSuccessMessage('Signup successful! You can now log in.');
+        setSuccessMessage('✅ Signup successful! You can now log in.');
         setName('');
         setEmail('');
         setPassword('');
@@ -54,7 +59,7 @@ const SignUp = () => {
       }
     } catch (err) {
       console.error('Network error:', err);
-      setError('Network error. Please try again later.');
+      setError('⚠️ Network error. Please try again later.');
     }
   };
 
@@ -117,8 +122,8 @@ const SignUp = () => {
             />
           </div>
 
-          {error && <p style={{ color: 'red', marginTop: '0.5rem' }}>{error}</p>}
-          {successMessage && <p style={{ color: 'green', marginTop: '0.5rem' }}>{successMessage}</p>}
+          {error && <p style={{ color: '#ff4444', marginTop: '0.5rem' }}>{error}</p>}
+          {successMessage && <p style={{ color: '#00c851', marginTop: '0.5rem' }}>{successMessage}</p>}
 
           <button type="submit" className="login-button">Sign Up</button>
         </form>

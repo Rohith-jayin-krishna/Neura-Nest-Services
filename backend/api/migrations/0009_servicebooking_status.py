@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='servicebooking',
             name='status',
-            field=models.CharField(choices=[('active', 'Active'), ('completed', 'Completed'), ('cancelled', 'Cancelled')], default='active', max_length=20),
+            field=models.CharField(choices=[('Active', 'Active'), ('completed', 'Completed'), ('cancelled', 'Cancelled')], default='Active', max_length=20),
         ),
     ]

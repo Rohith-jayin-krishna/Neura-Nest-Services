@@ -17,8 +17,8 @@ class ContactMessage(models.Model):
 class ServiceBooking(models.Model):
     STATUS_CHOICES = [
         ('active', 'Active'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
+        ('Completed', 'Completed'),
+        ('Cancelled', 'Cancelled'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='service_bookings')

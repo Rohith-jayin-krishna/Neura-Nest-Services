@@ -1,0 +1,125 @@
+.service-history {
+  padding: 2rem;
+  color: #f4f4f4;
+}
+
+.service-history h2 {
+  margin-bottom: 35px;
+}
+
+.controls {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.controls select,
+.controls input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #1c1c1c;
+  color: #fff;
+}
+
+.controls input::placeholder {
+  color: #aaa;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #1f1f1f;
+}
+
+.history-table th {
+  padding: 10px;
+  text-align: left;
+  color: #F09304;
+  font-weight: bold;
+  border-bottom: 2px solid #F09304;
+}
+
+.history-table td {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
+
+.btn-cancel {
+  padding: 6px 12px;
+  background-color: #F09304;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #ffb347;
+}
+
+.btn-cancelled {
+  padding: 6px 12px;
+  background-color: #D9534F;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: not-allowed;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
+
+.btn-completed {
+  padding: 6px 12px;
+  background-color: #5CB85C;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: not-allowed;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
+
+.error-message {
+  color: #ff4d4f;
+  margin-bottom: 1rem;
+}
+
+/* ✅ Status Badges */
+.status-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: capitalize;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.badge-active {
+  background-color: #FFF4E5;
+  color: #D17A00;
+  border: 1px solid #FFD8A8;
+}
+
+.badge-completed {
+  background-color: #E6FFEB;
+  color: #2E7D32;
+  border: 1px solid #A5D6A7;
+}
+
+.badge-cancelled {
+  background-color: #FFE6E6;
+  color: #C62828;
+  border: 1px solid #EF9A9A;
+}
+
+.status-badge:hover {
+  transform: scale(1.03);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}

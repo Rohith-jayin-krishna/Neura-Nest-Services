@@ -28,4 +28,7 @@ urlpatterns = [
 
     # ✅ Service History for Logged-in User
     path('service-history/', views.get_user_service_history, name='service-history'),
+
+    # ✅ Cancel Booking by ID (if not completed)
+    path('bookings/<int:booking_id>/cancel/', views.cancel_booking, name='cancel-booking'),
 ]

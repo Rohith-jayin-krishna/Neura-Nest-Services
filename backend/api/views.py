@@ -1,5 +1,3 @@
-# backend/api/views.py
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
@@ -18,6 +16,7 @@ from .serializers import (
 
 logger = logging.getLogger(__name__)
 
+# Contact form endpoint
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def submit_contact(request):
@@ -27,6 +26,7 @@ def submit_contact(request):
         return Response({"message": "Your message has been sent successfully!"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# User signup
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
@@ -39,6 +39,7 @@ def signup(request):
         return Response({'message': 'User registered successfully.'}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# API root
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def api_root(request):
@@ -51,9 +52,11 @@ def api_root(request):
         }
     })
 
+# JWT login using email
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = EmailTokenObtainPairSerializer
 
+# Get username by email
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def get_username_by_email(request):
@@ -66,7 +69,7 @@ def get_username_by_email(request):
     except User.DoesNotExist:
         return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
-# ✅ Updated service booking view to return ticket_id
+# Submit a service booking
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def submit_service_booking(request):
@@ -81,18 +84,35 @@ def submit_service_booking(request):
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Get logged-in user's service history
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_service_history(request):
-    print("✅ Service history view accessed.")
-    print("🔐 Logged-in user:", request.user)
-
     try:
         bookings = ServiceBooking.objects.filter(user=request.user).order_by('-booked_at')
-        print(f"📦 Found {bookings.count()} booking(s) for user {request.user.username}")
-
         serializer = ServiceBookingSerializer(bookings, many=True)
         return Response(serializer.data)
     except Exception as e:
-        print("❌ Error in get_user_service_history:", e)
         return Response({"error": str(e)}, status=500)
+
+# Cancel a booking (user-side)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def cancel_booking(request, booking_id):
+    try:
+        booking = ServiceBooking.objects.get(id=booking_id, user=request.user)
+
+        if booking.status == 'Completed':
+            return Response({"message": "Completed bookings cannot be cancelled."}, status=400)
+        if booking.status == 'Cancelled':
+            return Response({"message": "This booking has already been cancelled."}, status=400)
+
+        booking.status = 'Cancelled'  # ✅ Make sure 'Cancelled' matches your model choice
+        booking.save()
+
+        return Response({"message": "Booking cancelled successfully."}, status=200)
+
+    except ServiceBooking.DoesNotExist:
+        return Response({"message": "Booking not found."}, status=404)
+    except Exception as e:
+        return Response({"message": f"An error occurred: {str(e)}"}, status=500)
