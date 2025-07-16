@@ -24,17 +24,22 @@ const images = [
 
 const Home = () => {
   const [index, setIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  // Handle image loading
+  // Preload all images once
   useEffect(() => {
-    const img = new Image();
-    img.src = images[index];
-    img.onload = () => setLoading(false);
-    setLoading(true); // set to true before loading new image
-  }, [index]);
+    const promises = images.map((src) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = resolve;
+      });
+    });
 
-  // Auto-switch image every 5 seconds
+    Promise.all(promises).then(() => setImagesLoaded(true));
+  }, []);
+
+  // Rotate images every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
@@ -42,7 +47,7 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (loading) {
+  if (!imagesLoaded) {
     return (
       <div className="loader-container">
         <div className="loader"></div>
@@ -108,7 +113,7 @@ const Home = () => {
         </div>
       </motion.section>
 
-      {/* Testimonial */}
+      {/* Testimonial Section */}
       <motion.section
         className="testimonial-section"
         initial="hidden"
