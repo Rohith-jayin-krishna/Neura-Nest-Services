@@ -8,6 +8,10 @@ const ServiceHistory = () => {
   const [statusFilter, setStatusFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
 
+  useEffect(() => {
+    fetchHistory();
+  }, []);
+
   const fetchHistory = async () => {
     try {
       const token = localStorage.getItem('access_token');
@@ -52,10 +56,6 @@ const ServiceHistory = () => {
       alert('Failed to cancel booking. Please try again.');
     }
   };
-
-  useEffect(() => {
-    fetchHistory();
-  }, []);
 
   const normalize = (str) => (str || '').toLowerCase().trim();
 
@@ -107,36 +107,38 @@ const ServiceHistory = () => {
       {filteredAndSearchedHistory.length === 0 && !error ? (
         <p>No matching service records found.</p>
       ) : (
-        <table className="history-table">
-          <thead>
-            <tr>
-              <th>Ticket ID</th>
-              <th>Service Type</th>
-              <th>Preferred Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredAndSearchedHistory.map((booking) => (
-              <tr key={booking.id}>
-                <td>{booking.ticket_id}</td>
-                <td>{booking.service_type}</td>
-                <td>{booking.preferred_date}</td>
-                <td>{renderStatusBadge(booking.status)}</td>
-                <td>
-                  {booking.status === 'Cancelled' ? (
-                    <button className="btn-cancelled" disabled>Cancelled</button>
-                  ) : booking.status === 'Completed' ? (
-                    <button className="btn-completed" disabled>Completed</button>
-                  ) : (
-                    <button onClick={() => cancelBooking(booking.id)} className="btn-cancel">Cancel</button>
-                  )}
-                </td>
+        <div className="table-wrapper">
+          <table className="history-table">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Service Type</th>
+                <th>Preferred Date</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredAndSearchedHistory.map((booking) => (
+                <tr key={booking.id}>
+                  <td>{booking.ticket_id}</td>
+                  <td>{booking.service_type}</td>
+                  <td>{booking.preferred_date}</td>
+                  <td>{renderStatusBadge(booking.status)}</td>
+                  <td>
+                    {booking.status === 'Cancelled' ? (
+                      <button className="btn-cancelled" disabled>Cancelled</button>
+                    ) : booking.status === 'Completed' ? (
+                      <button className="btn-completed" disabled>Completed</button>
+                    ) : (
+                      <button onClick={() => cancelBooking(booking.id)} className="btn-cancel">Cancel</button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

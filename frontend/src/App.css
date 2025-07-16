@@ -58,3 +58,32 @@ h1 {
 .button:hover {
   background-color: #ffc107;
 }
+/* ========== Loader (NeuraNest Theme) ========== */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full screen */
+  background-color: #000; /* Matches dark theme */
+  z-index: 2000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* Spinner */
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #222;              /* Dark ring */
+  border-top: 6px solid #ffc107;       /* Theme yellow accent */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Rotation Animation */
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

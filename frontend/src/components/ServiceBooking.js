@@ -27,7 +27,6 @@ const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
   }, [selectedService]);
 
   useEffect(() => {
-    // Initialize flatpickr on input ref
     if (dateInputRef.current) {
       flatpickr(dateInputRef.current, {
         dateFormat: 'Y-m-d',
@@ -103,7 +102,7 @@ const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
   };
 
   return (
-    <div className="book-service-form">
+    <div className="book-service-form responsive-booking-form">
       <h2>Book a Smart Home Service</h2>
       {submitted ? (
         <div className="success-message">
@@ -139,7 +138,6 @@ const ServiceBooking = ({ selectedService = '', setSelectedService }) => {
             <option value="Full Automation">Full Automation</option>
           </select>
 
-          {/* ✅ Native Flatpickr on plain input */}
           <input
             ref={dateInputRef}
             className="date-picker-input"

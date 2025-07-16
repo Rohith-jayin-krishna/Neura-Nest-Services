@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './Pages.css';
+import '../App.css'; // Loader styles
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
 };
 
-// Fading animation for images
 const imageFade = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 1.2 } },
@@ -24,14 +24,31 @@ const images = [
 
 const Home = () => {
   const [index, setIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  // Auto-switch every 5 seconds
+  // Handle image loading
+  useEffect(() => {
+    const img = new Image();
+    img.src = images[index];
+    img.onload = () => setLoading(false);
+    setLoading(true); // set to true before loading new image
+  }, [index]);
+
+  // Auto-switch image every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="page-container home-container">
@@ -74,7 +91,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section (unchanged) */}
+      {/* Features Section */}
       <motion.section
         className="features-section"
         initial="hidden"

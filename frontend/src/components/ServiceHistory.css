@@ -21,10 +21,22 @@
   border: 1px solid #ccc;
   background-color: #1c1c1c;
   color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.controls select:hover,
+.controls input:hover {
+  border-color: #F09304;
 }
 
 .controls input::placeholder {
   color: #aaa;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  border-radius: 8px;
 }
 
 .history-table {
@@ -32,6 +44,7 @@
   border-collapse: collapse;
   margin-top: 1rem;
   background-color: #1f1f1f;
+  min-width: 600px;
 }
 
 .history-table th {
@@ -55,11 +68,12 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-cancel:hover {
   background-color: #ffb347;
+  transform: scale(1.03);
 }
 
 .btn-cancelled {
@@ -122,4 +136,39 @@
 .status-badge:hover {
   transform: scale(1.03);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Responsive design */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .controls select,
+  .controls input {
+    width: 100%;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #333;
+    border-radius: 8px;
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 10px 8px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .service-history {
+    padding: 1rem;
+  }
+
+  .service-history h2 {
+    font-size: 1.25rem;
+  }
 }
