@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './Navbar.css';
 import { useAuth } from '../Context/AuthContext';
+import logo from '../assets/logo1.png';
 
 function Navbar() {
   const location = useLocation();
@@ -10,6 +11,7 @@ function Navbar() {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -31,11 +33,19 @@ function Navbar() {
     document.body.classList.remove('menu-open');
   };
 
+  // 🔽 Detect scroll to toggle shrink
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuOpen && navRef.current && !navRef.current.contains(e.target)) {
-        setMenuOpen(false);
-        document.body.classList.remove('menu-open');
+        closeMenu();
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -50,14 +60,18 @@ function Navbar() {
 
   return (
     <motion.div
-      className="navbar"
+      className={`navbar ${isScrolled ? 'scrolled' : ''}`}
       ref={navRef}
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <Link to="/" className="navbar-logo" onClick={closeMenu}>
-        NeuraNest
+        <img
+          src={logo}
+          alt="NeuraNest"
+          className="navbar-logo-img"
+        />
       </Link>
 
       <button
@@ -77,11 +91,7 @@ function Navbar() {
         transition={{ duration: 0.3 }}
       >
         {['/', '/about', '/services', '/contact'].map((path) => (
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            key={path}
-          >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} key={path}>
             <Link
               to={path}
               className={`nav-link ${location.pathname === path ? 'active' : ''}`}
