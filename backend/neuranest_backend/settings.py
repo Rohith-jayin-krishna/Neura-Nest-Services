@@ -1,6 +1,6 @@
 from pathlib import Path
 import os
-from datetime import timedelta  # ✅ Required for token lifetime settings
+from datetime import timedelta
 
 # --------------------------------------------------
 # Base Directory
@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'rest_framework_simplejwt',   # ✅ JWT support
+    'rest_framework_simplejwt',
     'api',
 ]
 
@@ -35,7 +35,7 @@ INSTALLED_APPS = [
 # --------------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # CORS first
+    'corsheaders.middleware.CorsMiddleware',  # CORS must be first
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -45,13 +45,13 @@ MIDDLEWARE = [
 ]
 
 # --------------------------------------------------
-# CORS (Cross-Origin Resource Sharing)
+# CORS Settings
 # --------------------------------------------------
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://localhost:3001",         
-    "http://127.0.0.1:3001",         
+    "http://localhost:3001",
+    "http://127.0.0.1:3001",
 ]
 
 # --------------------------------------------------
@@ -133,7 +133,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # --------------------------------------------------
-# Django REST Framework
+# Django REST Framework Configuration
 # --------------------------------------------------
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
@@ -145,14 +145,16 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5,  # 👈 Adjust as needed
 }
 
 # --------------------------------------------------
-# JWT Expiry Settings ✅
+# JWT Configuration
 # --------------------------------------------------
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # 1 hour
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),     # 7 days
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,

@@ -1,3 +1,6 @@
+/* --------------------------------------------
+   🎨 Base Container Styling
+-------------------------------------------- */
 .service-history {
   padding: 2rem;
   color: #f4f4f4;
@@ -7,6 +10,9 @@
   margin-bottom: 35px;
 }
 
+/* --------------------------------------------
+   🛠️ Filters and Search Controls
+-------------------------------------------- */
 .controls {
   margin-bottom: 1rem;
   display: flex;
@@ -33,86 +39,93 @@
   color: #aaa;
 }
 
+/* --------------------------------------------
+   📋 Table Container
+-------------------------------------------- */
 .table-wrapper {
   overflow-x: auto;
   width: 100%;
   border-radius: 8px;
 }
 
+/* --------------------------------------------
+   📊 Service History Table Styling
+-------------------------------------------- */
 .history-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   margin-top: 1rem;
   background-color: #1f1f1f;
   min-width: 600px;
 }
 
+.history-table th,
+.history-table td {
+  padding: 12px 16px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ✅ Define Consistent Column Widths */
+.history-table th:nth-child(1),
+.history-table td:nth-child(1) {
+  width: 140px;
+}
+.history-table th:nth-child(2),
+.history-table td:nth-child(2) {
+  width: 160px;
+}
+.history-table th:nth-child(3),
+.history-table td:nth-child(3) {
+  width: 160px;
+}
+.history-table th:nth-child(4),
+.history-table td:nth-child(4) {
+  width: 130px;
+}
+.history-table th:nth-child(5),
+.history-table td:nth-child(5) {
+  width: 130px;
+}
+
+/* --------------------------------------------
+   🧾 Table Header Styling
+-------------------------------------------- */
 .history-table th {
-  padding: 10px;
-  text-align: left;
   color: #F09304;
   font-weight: bold;
   border-bottom: 2px solid #F09304;
 }
 
-.history-table td {
-  padding: 10px;
-  border-bottom: 1px solid #444;
+/* --------------------------------------------
+   🎬 Row Animation
+-------------------------------------------- */
+.history-table tbody tr {
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.btn-cancel {
-  padding: 6px 12px;
-  background-color: #F09304;
-  color: #000;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.btn-cancel:hover {
-  background-color: #ffb347;
-  transform: scale(1.03);
-}
-
-.btn-cancelled {
-  padding: 6px 12px;
-  background-color: #D9534F;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: not-allowed;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
-}
-
-.btn-completed {
-  padding: 6px 12px;
-  background-color: #5CB85C;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: not-allowed;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
-}
-
-.error-message {
-  color: #ff4d4f;
-  margin-bottom: 1rem;
-}
-
-/* ✅ Status Badges */
+/* --------------------------------------------
+   📍 Status Badges
+-------------------------------------------- */
 .status-badge {
   display: inline-block;
+  min-width: 90px;
+  text-align: center;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 999px;
   text-transform: capitalize;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease-in-out;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .badge-active {
@@ -138,7 +151,115 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* ✅ Responsive design */
+/* --------------------------------------------
+   ❌ Cancel / Completed Buttons
+-------------------------------------------- */
+.btn-cancel {
+  padding: 6px 12px;
+  background-color: #F09304;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  min-width: 90px;
+}
+
+.btn-cancel:hover {
+  background-color: #ffb347;
+  transform: scale(1.03);
+}
+
+.btn-cancelled,
+.btn-completed {
+  padding: 6px 12px;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: not-allowed;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  min-width: 90px;
+}
+
+.btn-cancelled {
+  background-color: #D9534F;
+}
+
+.btn-completed {
+  background-color: #5CB85C;
+}
+
+/* --------------------------------------------
+   ⚠️ Error Message
+-------------------------------------------- */
+.error-message {
+  color: #ff4d4f;
+  margin-bottom: 1rem;
+}
+
+/* --------------------------------------------
+   🔢 Pagination Styling
+-------------------------------------------- */
+.pagination {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: #F09304;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #ffb347;
+  transform: scale(1.05);
+}
+
+.pagination button:disabled {
+  background-color: #888;
+  color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* 🧩 Page Number Button Styling */
+.pagination .page-number {
+  background-color: #2c2c2c;
+  color: #F09304;
+  border: 1px solid #F09304;
+}
+
+.pagination .page-number:hover:not(.active-page) {
+  background-color: #3a3a3a;
+  color: #ffc76b;
+  transform: scale(1.05);
+}
+
+.pagination .active-page {
+  background-color: #F09304;
+  color: #000;
+  border: 1px solid #F09304;
+  cursor: default;
+  transform: scale(1.05);
+  box-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+}
+
+/* --------------------------------------------
+   📱 Mobile-Friendly Adjustments
+-------------------------------------------- */
 @media (max-width: 768px) {
   .controls {
     flex-direction: column;
@@ -161,7 +282,6 @@
   .history-table td {
     padding: 10px 8px;
     font-size: 0.875rem;
-    white-space: nowrap;
   }
 
   .service-history {

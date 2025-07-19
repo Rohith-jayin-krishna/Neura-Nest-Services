@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import './Navbar.css';
 import { useAuth } from '../Context/AuthContext';
 
@@ -30,7 +31,6 @@ function Navbar() {
     document.body.classList.remove('menu-open');
   };
 
-  // Close menu on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuOpen && navRef.current && !navRef.current.contains(e.target)) {
@@ -42,7 +42,6 @@ function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [menuOpen]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       document.body.classList.remove('menu-open');
@@ -50,7 +49,13 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="navbar" ref={navRef}>
+    <motion.div
+      className="navbar"
+      ref={navRef}
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+    >
       <Link to="/" className="navbar-logo" onClick={closeMenu}>
         NeuraNest
       </Link>
@@ -65,32 +70,62 @@ function Navbar() {
         <span className="bar" />
       </button>
 
-      <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
-        <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} onClick={closeMenu}>
-          Home
-        </Link>
-        <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={closeMenu}>
-          About
-        </Link>
-        <Link to="/services" className={`nav-link ${location.pathname === '/services' ? 'active' : ''}`} onClick={closeMenu}>
-          Services
-        </Link>
-        <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={closeMenu}>
-          Contact
-        </Link>
+      <motion.div
+        className={`nav-links ${menuOpen ? 'open' : ''}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        {['/', '/about', '/services', '/contact'].map((path) => (
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            key={path}
+          >
+            <Link
+              to={path}
+              className={`nav-link ${location.pathname === path ? 'active' : ''}`}
+              onClick={closeMenu}
+            >
+              {path === '/' ? 'Home' : path.replace('/', '').charAt(0).toUpperCase() + path.slice(2)}
+            </Link>
+          </motion.div>
+        ))}
 
         {user ? (
           <div className="user-info">
-            <span className="nav-link user-name">Welcome, {user.name || user.email || 'User'}</span>
-            <button onClick={handleLogout} className="logout-button">Logout</button>
+            <motion.span
+              className="nav-link user-name"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 200 }}
+              style={{ color: 'limegreen', fontWeight: 'bold' }}
+            >
+              Welcome, {user.name || user.email || 'User'}
+            </motion.span>
+
+            <motion.button
+              onClick={handleLogout}
+              className="logout-button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Logout
+            </motion.button>
           </div>
         ) : (
-          <Link to="/login" className={`nav-link ${location.pathname === '/login' ? 'active' : ''}`} onClick={closeMenu}>
-            Login
-          </Link>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              to="/login"
+              className={`nav-link ${location.pathname === '/login' ? 'active' : ''}`}
+              onClick={closeMenu}
+            >
+              Login
+            </Link>
+          </motion.div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

@@ -4,9 +4,9 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 import logging
 from .models import ServiceBooking
-
 from .serializers import (
     ContactMessageSerializer,
     RegisterSerializer,
@@ -84,14 +84,55 @@ def submit_service_booking(request):
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Get logged-in user's service history
+# Get logged-in user's service history with pagination
+from django.db.models import Q
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_service_history(request):
     try:
         bookings = ServiceBooking.objects.filter(user=request.user).order_by('-booked_at')
-        serializer = ServiceBookingSerializer(bookings, many=True)
-        return Response(serializer.data)
+        all_data = request.query_params.get('all', 'false').lower() == 'true'
+
+        # ✅ Apply status filter
+        status_filter = request.query_params.get('status', None)
+        if status_filter and status_filter.lower() != 'all':
+            bookings = bookings.filter(status__iexact=status_filter)
+
+        # ✅ Apply search filter
+        search_query = request.query_params.get('search', None)
+        if search_query:
+            bookings = bookings.filter(
+                Q(ticket_id__icontains=search_query) |
+                Q(service_type__icontains=search_query)
+            )
+
+        if all_data:
+            # Return everything without pagination
+            serializer = ServiceBookingSerializer(bookings, many=True)
+            return Response({
+                "results": serializer.data,
+                "all_data": True
+            })
+
+        # ✅ Pagination mode
+        page = request.query_params.get('page', 1)
+        per_page = request.query_params.get('per_page', 5)
+
+        paginator = Paginator(bookings, per_page)
+        page_obj = paginator.get_page(page)
+
+        serializer = ServiceBookingSerializer(page_obj.object_list, many=True)
+
+        return Response({
+            "results": serializer.data,
+            "total_pages": paginator.num_pages,
+            "current_page": page_obj.number,
+            "has_next": page_obj.has_next(),
+            "has_previous": page_obj.has_previous(),
+            "all_data": False
+        })
+
     except Exception as e:
         return Response({"error": str(e)}, status=500)
 
